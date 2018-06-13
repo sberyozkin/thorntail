@@ -4,7 +4,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
 @Path("/secured")
-@Produces("text/plain")
 public class SecuredResource {
 
     @GET
