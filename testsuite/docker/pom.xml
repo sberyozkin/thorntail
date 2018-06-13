@@ -20,6 +20,7 @@
     <module>jms</module>
     <module>opentracing-jaeger</module>
     <module>opentracing-jaeger-vertx</module>
+    <module>security-keycloak</module>
   </modules>
 
 </project>
