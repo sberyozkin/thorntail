@@ -29,7 +29,6 @@
               <alias>keycloak</alias>
               <run>
                 <env>
-                  <jboss.socket.binding.port-offset>100</jboss.socket.binding.port-offset>
                   <keycloak.migration.action>import</keycloak.migration.action>
                   <keycloak.migration.provider>dir</keycloak.migration.provider>
                   <keycloak.migration.dir>/tmp/realm</keycloak.migration.dir>
@@ -45,8 +44,10 @@
                 <wait>
                   <http>
                    <url>http://localhost:8180/auth</url>
+                   <method>GET</method>
                    <status>200</status>
                   </http> 
+                  <time>10000</time>
                 </wait>
               </run>
             </image>
