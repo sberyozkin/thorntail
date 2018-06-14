@@ -38,15 +38,11 @@
                 </ports>
                 <volumes>
                  <bind>
-                   <volume>${project.build.dir}/realm:/tmp/realm</volume>
+                   <volume>${project.basedir}/realm:/tmp/realm</volume>
                  </bind>
                 </volumes>
+                <cmd>-b 0.0.0.0</cmd>
                 <wait>
-                  <http>
-                   <url>http://localhost:8180/auth</url>
-                   <method>GET</method>
-                   <status>200</status>
-                  </http> 
                   <time>10000</time>
                 </wait>
               </run>
