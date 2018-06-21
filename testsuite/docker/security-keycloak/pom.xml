@@ -62,5 +62,9 @@
       <groupId>io.thorntail</groupId>
       <artifactId>thorntail-security-keycloak</artifactId>
     </dependency>
+    <dependency>
+      <groupId>io.thorntail</groupId>
+      <artifactId>thorntail-jwt-auth</artifactId>
+    </dependency>
   </dependencies>
 </project>
