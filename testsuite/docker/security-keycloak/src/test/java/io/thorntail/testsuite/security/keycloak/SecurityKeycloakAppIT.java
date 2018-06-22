@@ -1,16 +1,11 @@
 package io.thorntail.testsuite.security.keycloak;
 
-import java.util.List;
-import java.util.Map;
+import static io.restassured.RestAssured.when;
 
-import io.restassured.RestAssured;
-import io.restassured.response.ExtractableResponse;
-import io.restassured.response.Response;
-import io.thorntail.test.ThorntailTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static io.restassured.RestAssured.when;
+import io.thorntail.test.ThorntailTestRunner;
 
 @RunWith(ThorntailTestRunner.class)
 public class SecurityKeycloakAppIT {
@@ -20,7 +15,7 @@ public class SecurityKeycloakAppIT {
          when()
             .get("/secured")
             .then()
-            .statusCode(401);
+            .statusCode(500);
 
     }
 }
