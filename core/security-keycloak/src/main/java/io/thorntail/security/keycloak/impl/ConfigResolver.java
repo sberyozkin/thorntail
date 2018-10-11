@@ -15,9 +15,11 @@ public class ConfigResolver implements KeycloakConfigResolver {
     @Override
     public KeycloakDeployment resolve(HttpFacade.Request request) {
         for (KeycloakConfigResolver resolver : resolvers() ) {
-            KeycloakDeployment config = resolver.resolve(request);
-            if ( config != null ) {
-                return config;
+            if (resolver != null) {
+                KeycloakDeployment config = resolver.resolve(request);
+                if ( config != null ) {
+                    return config;
+                }
             }
         }
 
