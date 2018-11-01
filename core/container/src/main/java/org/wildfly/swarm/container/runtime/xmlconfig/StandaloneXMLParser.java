@@ -56,22 +56,26 @@ public class StandaloneXMLParser {
 
     public StandaloneXMLParser() {
 
-        parserDelegate = new StandaloneXml(new ExtensionHandler() {
-            @Override
-            public void parseExtensions(XMLExtendedStreamReader reader, ModelNode address, Namespace namespace, List<ModelNode> list) throws XMLStreamException {
-                reader.discardRemainder(); // noop
-            }
+        parserDelegate = new StandaloneXml(
+            new ExtensionHandler() {
+                @Override
+                public void parseExtensions(XMLExtendedStreamReader reader, ModelNode address, Namespace namespace, List<ModelNode> list) throws XMLStreamException {
+                    reader.discardRemainder(); // noop
+                }
 
-            @Override
-            public Set<ProfileParsingCompletionHandler> getProfileParsingCompletionHandlers() {
-                return Collections.emptySet();
-            }
+                @Override
+                public Set<ProfileParsingCompletionHandler> getProfileParsingCompletionHandlers() {
+                    return Collections.emptySet();
+                }
 
-            @Override
-            public void writeExtensions(XMLExtendedStreamWriter writer, ModelNode modelNode) throws XMLStreamException {
-                // noop
-            }
-        }, new DeferredExtensionContext(null, null, null), ParsingOption.IGNORE_SUBSYSTEM_FAILURES);
+                @Override
+                public void writeExtensions(XMLExtendedStreamWriter writer, ModelNode modelNode) throws XMLStreamException {
+                    // noop
+                }
+            },
+            //WF14, THORN-2210
+            new DeferredExtensionContext(null, null, null),
+            ParsingOption.IGNORE_SUBSYSTEM_FAILURES);
 
         xmlMapper = XMLMapper.Factory.create();
 
