@@ -19,7 +19,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
-import org.wildfly.swarm.config.infinispan.cache_container.EvictionComponent;
 import org.wildfly.swarm.config.infinispan.cache_container.LockingComponent;
 import org.wildfly.swarm.config.infinispan.cache_container.TransactionComponent;
 import org.wildfly.swarm.infinispan.InfinispanFraction;
@@ -53,16 +52,13 @@ public class CacheCustomizer implements Customizer {
                 .localCache("resultset-repl",
                         c -> c.lockingComponent(l -> l.isolation(LockingComponent.Isolation.READ_COMMITTED))
                         .transactionComponent(t -> t.mode(TransactionComponent.Mode.NON_XA))
-                        .evictionComponent(e -> e.strategy(EvictionComponent.Strategy.LIRS).maxEntries(1024L))
                         .expirationComponent(e -> e.maxIdle(7200000L)))
                 .localCache("resultset",
                         c -> c.lockingComponent(l -> l.isolation(LockingComponent.Isolation.READ_COMMITTED))
                         .transactionComponent(t -> t.mode(TransactionComponent.Mode.NON_XA))
-                        .evictionComponent(e -> e.strategy(EvictionComponent.Strategy.LIRS).maxEntries(1024L))
                         .expirationComponent(e -> e.maxIdle(7200000L)))
                 .localCache("preparedplan",
                         c -> c.lockingComponent(l -> l.isolation(LockingComponent.Isolation.READ_COMMITTED))
-                        .evictionComponent(e -> e.strategy(EvictionComponent.Strategy.LIRS).maxEntries(512L))
                         .expirationComponent(e -> e.maxIdle(28800L))
                         ));
 
