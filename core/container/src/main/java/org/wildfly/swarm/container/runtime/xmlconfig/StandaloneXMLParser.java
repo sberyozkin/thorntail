@@ -30,6 +30,10 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
+import org.jboss.as.controller.ProcessType;
+import org.jboss.as.controller.RunningMode;
+import org.jboss.as.controller.RunningModeControl;
+import org.jboss.as.controller.extension.ExtensionRegistry;
 import org.jboss.as.controller.parsing.DeferredExtensionContext;
 import org.jboss.as.controller.parsing.Namespace;
 import org.jboss.as.controller.parsing.ProfileParsingCompletionHandler;
@@ -41,6 +45,7 @@ import org.jboss.staxmapper.XMLElementReader;
 import org.jboss.staxmapper.XMLExtendedStreamReader;
 import org.jboss.staxmapper.XMLExtendedStreamWriter;
 import org.jboss.staxmapper.XMLMapper;
+import org.wildfly.swarm.bootstrap.modules.BootModuleLoader;
 
 /**
  * @author Heiko Braun
@@ -56,6 +61,13 @@ public class StandaloneXMLParser {
 
     public StandaloneXMLParser() {
 
+        //WF14, THORN-2210
+        @SuppressWarnings("deprecation")
+        final ExtensionRegistry extensionRegistry =
+            new ExtensionRegistry(ProcessType.EMBEDDED_SERVER, new RunningModeControl(RunningMode.NORMAL));
+        final DeferredExtensionContext deferredExtensionContext =
+            new DeferredExtensionContext(new BootModuleLoader(), extensionRegistry, null);
+        //End of WF14
         parserDelegate = new StandaloneXml(
             new ExtensionHandler() {
                 @Override
@@ -74,7 +86,7 @@ public class StandaloneXMLParser {
                 }
             },
             //WF14, THORN-2210
-            new DeferredExtensionContext(null, null, null),
+            deferredExtensionContext,
             ParsingOption.IGNORE_SUBSYSTEM_FAILURES);
 
         xmlMapper = XMLMapper.Factory.create();
