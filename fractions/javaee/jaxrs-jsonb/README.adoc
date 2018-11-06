@@ -1,0 +1,4 @@
+= JAX-RS + JSON-B
+
+Provides support within JAX-RS application for JSON Binding processing
+according to JSR-367.
