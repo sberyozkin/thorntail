@@ -630,6 +630,12 @@
 
       <dependency>
         <groupId>io.thorntail</groupId>
+        <artifactId>jsonb</artifactId>
+        <version>2.3.0.Final-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.thorntail</groupId>
         <artifactId>keycloak</artifactId>
         <version>2.3.0.Final-SNAPSHOT</version>
       </dependency>
@@ -1216,6 +1222,7 @@
         <module>testsuite/testsuite-jpa-mysql</module>
         <module>testsuite/testsuite-jpa-postgresql</module>
         <module>testsuite/testsuite-jsf</module>
+        <module>testsuite/testsuite-jsonb</module>
         <module>testsuite/testsuite-jsp</module>
         <module>testsuite/testsuite-microprofile-jwt</module>
         <module>testsuite/testsuite-microprofile-metrics</module>
