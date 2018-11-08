@@ -21,21 +21,10 @@
 
   <packaging>jar</packaging>
   
-  <properties>
-    <version.javax.json.bind-api>1.0</version.javax.json.bind-api>
-    <version.org.eclipse.yasson>1.0.1</version.org.eclipse.yasson>
-    <version.org.glassfish.javax.json>1.1.2</version.org.glassfish.javax.json>
-  </properties>
-
   <dependencies>
     <dependency>
       <groupId>io.thorntail</groupId>
       <artifactId>jsonb</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>javax.json.bind</groupId>
-      <artifactId>javax.json.bind-api</artifactId>
-      <version>${version.javax.json.bind-api}</version>
     </dependency>
     <dependency>
       <groupId>io.thorntail</groupId>
@@ -44,18 +33,6 @@
     <dependency>
       <groupId>io.thorntail</groupId>
       <artifactId>arquillian</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse</groupId>
-      <artifactId>yasson</artifactId>
-      <version>${version.org.eclipse.yasson}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.glassfish</groupId>
-      <artifactId>javax.json</artifactId>
-      <version>${version.org.glassfish.javax.json}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
