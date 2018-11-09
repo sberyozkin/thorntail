@@ -49,6 +49,7 @@ public class CacheCustomizer implements Customizer {
 
         this.infinispan.get().cacheContainer("teiid-cache",
                 cc -> cc.defaultCache("resultset")
+                // WF14 all these caches had eviction configured
                 .localCache("resultset-repl",
                         c -> c.lockingComponent(l -> l.isolation(LockingComponent.Isolation.READ_COMMITTED))
                         .transactionComponent(t -> t.mode(TransactionComponent.Mode.NON_XA))
