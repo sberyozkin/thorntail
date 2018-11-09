@@ -35,10 +35,7 @@ import org.jboss.as.controller.ProcessType;
 import org.jboss.as.controller.RunningMode;
 import org.jboss.as.controller.RunningModeControl;
 import org.jboss.as.controller.extension.ExtensionRegistry;
-<<<<<<< HEAD
-=======
 import org.jboss.as.controller.extension.RuntimeHostControllerInfoAccessor;
->>>>>>> d0e6430debbaa6e15015c04783a90d2e4b4542dd
 import org.jboss.as.controller.parsing.DeferredExtensionContext;
 import org.jboss.as.controller.parsing.Namespace;
 import org.jboss.as.controller.parsing.ProfileParsingCompletionHandler;
