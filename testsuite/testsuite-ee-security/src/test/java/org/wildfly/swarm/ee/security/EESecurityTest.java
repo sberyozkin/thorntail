@@ -30,19 +30,10 @@ import org.wildfly.swarm.arquillian.DefaultDeployment;
 @DefaultDeployment
 public class EESecurityTest {
 
-//    @Deployment
-//    public static Archive createDeployment() throws Exception {
-//        WARArchive deployment = ShrinkWrap.create(WARArchive.class);
-//        deployment.addClass(EESecurityServlet.class);
-//        deployment.addClass(SimpleAuthenticationMechanism.class);
-//        deployment.addClass(SimpleIdentityStore.class);
-//        deployment.addAsResource("WEB-INF/beans.xml");
-//        return deployment;
-//    }
 
     @Test
     @RunAsClient
-    public void testEeSecurity() throws IOException {
+    public void testCustomAuthenticationMechanism() throws IOException {
         String response1 = Request.Get("http://localhost:8080/security?name=thorntail1&password=secret1")
                 .execute().returnContent().asString().trim();
         assertThat(response1).isEqualTo("thorntail1,role1:true,role2:false");
