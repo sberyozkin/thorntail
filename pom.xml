@@ -1216,7 +1216,7 @@
         <module>testsuite/testsuite-default-deployment</module>
         <module>testsuite/testsuite-ee</module>
         <module>testsuite/testsuite-ee-security</module>
-        <module>testsuite/testsuite-ee-jaxrs-security</module>
+        <module>testsuite/testsuite-ee-security-jaxrs</module>
         <module>testsuite/testsuite-ejb</module>
         <module>testsuite/testsuite-https</module>
         <module>testsuite/testsuite-hystrix</module>
