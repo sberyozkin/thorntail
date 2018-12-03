@@ -39,7 +39,7 @@ public class TempFileManager {
 
     public static final TempFileManager INSTANCE = new TempFileManager();
 
-    private static final Pattern tempFilePattern = Pattern.compile("wfswarm\\S+[0-9]{5,}.\\S{5,}");
+    private static final Pattern tempFilePattern = Pattern.compile(WFSWARM_TMP_PREFIX + "\\S+[0-9]{5,}.\\S{5,}");
 
     private TempFileManager() {
         String tmpDir = System.getProperty(TMPDIR_PROPERTY);
