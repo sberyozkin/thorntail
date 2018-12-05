@@ -22,14 +22,14 @@
   <description>Build Parent to bring in required dependencies</description>
 
   <properties>
-    <version.thorntail.fraction.plugin>91-SNAPSHOT</version.thorntail.fraction.plugin>
+    <version.thorntail.fraction.plugin>91</version.thorntail.fraction.plugin>
 
     <version.org.snakeyaml>1.18</version.org.snakeyaml>
 
     <version.wildfly.config-api>1.5.3</version.wildfly.config-api>
 
-    <version.keycloak.config-api>1.5.0</version.keycloak.config-api>
-    <version.keycloak>4.6.0.Final</version.keycloak>
+    <version.keycloak.config-api>1.5.1</version.keycloak.config-api>
+    <version.keycloak>4.7.0.Final</version.keycloak>
     <version.mongo.config-api>1.5.0</version.mongo.config-api>
     <version.cassandra.config-api>1.5.0</version.cassandra.config-api>
     <version.neo4j.config-api>1.5.0</version.neo4j.config-api>
