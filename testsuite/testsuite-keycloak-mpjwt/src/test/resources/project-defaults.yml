@@ -7,6 +7,8 @@ keycloak:
     provider: singleFile
     action: import
     file: ${project.build.testOutputDirectory}/wildfly-swarm-keycloak-example-realm.json
+  json:
+    location: a    
 swarm:
   microprofile:
     jwtauth:

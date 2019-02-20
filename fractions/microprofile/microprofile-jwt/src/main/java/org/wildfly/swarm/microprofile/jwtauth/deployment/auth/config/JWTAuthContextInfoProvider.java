@@ -20,15 +20,18 @@ package org.wildfly.swarm.microprofile.jwtauth.deployment.auth.config;
 
 import java.security.interfaces.RSAPublicKey;
 import java.util.Optional;
+
 import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.DeploymentException;
 import javax.inject.Inject;
 
-import io.smallrye.jwt.KeyUtils;
-import io.smallrye.jwt.auth.principal.JWTAuthContextInfo;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
+
+import io.smallrye.jwt.KeyUtils;
+import io.smallrye.jwt.auth.principal.DefaultJWTAuthContextInfo;
+import io.smallrye.jwt.auth.principal.JWTAuthContextInfo;
 
 /**
  * An extension of the SmallRey CDI provider for the JWTAuthContextInfo that extends the information from
@@ -85,14 +88,14 @@ public class JWTAuthContextInfoProvider extends io.smallrye.jwt.config.JWTAuthCo
             Optional<String> mpJwtublicKey = super.getMpJwtPublicKey();
             try {
                 RSAPublicKey pk = (RSAPublicKey) KeyUtils.decodeJWKSPublicKey(mpJwtublicKey.get());
-                contextInfo.setSignerKey(pk);
+                contextInfo.setProperty(RSAPublicKey.class.getName(), pk);
                 log.debugf("mpJwtPublicKey parsed as JWK(S)");
             } catch (Exception e) {
                 // Try as PEM key value
                 log.debugf("mpJwtPublicKey failed as JWK(S), %s", e.getMessage());
                 try {
                     RSAPublicKey pk = (RSAPublicKey) KeyUtils.decodePublicKey(mpJwtublicKey.get());
-                    contextInfo.setSignerKey(pk);
+                    contextInfo.setProperty(RSAPublicKey.class.getName(), pk);
                     log.debugf("mpJwtPublicKey parsed as PEM");
                 } catch (Exception e1) {
                     throw new DeploymentException(e1);
@@ -101,7 +104,7 @@ public class JWTAuthContextInfoProvider extends io.smallrye.jwt.config.JWTAuthCo
         } else if (publicKeyPemEnc.isPresent() && !NONE.equals(publicKeyPemEnc.get())) {
             try {
                 RSAPublicKey pk = (RSAPublicKey) KeyUtils.decodePublicKey(publicKeyPemEnc.get());
-                contextInfo.setSignerKey(pk);
+                contextInfo.setProperty(RSAPublicKey.class.getName(), pk);
             } catch (Exception e) {
                 throw new DeploymentException(e);
             }
@@ -109,32 +112,32 @@ public class JWTAuthContextInfoProvider extends io.smallrye.jwt.config.JWTAuthCo
 
         String mpJwtIssuer = super.getMpJwtIssuer();
         if (mpJwtIssuer != null && !mpJwtIssuer.equals(NONE)) {
-            contextInfo.setIssuedBy(mpJwtIssuer);
+            contextInfo.setProperty(DefaultJWTAuthContextInfo.MP_JWT_VERIY_PUBLIC_ISSUER, mpJwtIssuer);
         } else if (issuedBy != null && !issuedBy.equals(NONE)) {
-            contextInfo.setIssuedBy(issuedBy);
+            contextInfo.setProperty(DefaultJWTAuthContextInfo.MP_JWT_VERIY_PUBLIC_ISSUER, issuedBy);
         }
 
         Optional<Boolean> mpJwtRequireIss = super.getMpJwtRequireIss();
         if (mpJwtRequireIss != null && mpJwtRequireIss.isPresent()) {
-            contextInfo.setRequireIssuer(mpJwtRequireIss.get());
+            contextInfo.setProperty(DefaultJWTAuthContextInfo.MP_JWT_VERIY_REQUIRE_ISS, mpJwtRequireIss.get());
         } else {
             // Default is to require iss claim
-            contextInfo.setRequireIssuer(true);
+            contextInfo.setProperty(DefaultJWTAuthContextInfo.MP_JWT_VERIY_REQUIRE_ISS, true);
         }
 
         if (expGracePeriodSecs.isPresent()) {
-            contextInfo.setExpGracePeriodSecs(expGracePeriodSecs.get());
+            contextInfo.setProperty(DefaultJWTAuthContextInfo.EXPIRY_GRACE_PERIOD, expGracePeriodSecs.get());
         }
         // The MP-JWT location can be a PEM, JWK or JWKS
         Optional<String> mpJwtLocation = super.getMpJwtLocation();
         if (mpJwtLocation.isPresent() && !NONE.equals(mpJwtLocation.get())) {
-            contextInfo.setJwksUri(mpJwtLocation.get());
-            contextInfo.setFollowMpJwt11Rules(true);
+            contextInfo.setProperty(DefaultJWTAuthContextInfo.JWK_KEYS_URI, mpJwtLocation.get());
+            contextInfo.setProperty(DefaultJWTAuthContextInfo.FOLLOW_MP_JWT11_RULES, true);
         } else if (jwksUri.isPresent() && !NONE.equals(jwksUri.get())) {
-            contextInfo.setJwksUri(jwksUri.get());
+            contextInfo.setProperty(DefaultJWTAuthContextInfo.JWK_KEYS_URI, jwksUri.get());
         }
         if (jwksRefreshInterval.isPresent()) {
-            contextInfo.setJwksRefreshInterval(jwksRefreshInterval.get());
+            contextInfo.setProperty(DefaultJWTAuthContextInfo.JWK_KEYS_REFRESH_INTERVAL, jwksRefreshInterval.get());
         }
 
         return Optional.of(contextInfo);

@@ -35,6 +35,7 @@ import org.junit.runner.RunWith;
 import org.wildfly.swarm.jaxrs.JAXRSArchive;
 import org.wildfly.swarm.microprofile.jwtauth.keycloak.SecuredApplication;
 import org.wildfly.swarm.microprofile.jwtauth.keycloak.SecuredResource;
+import org.wildfly.swarm.microprofile.jwtauth.keycloak.deployment.principal.KeycloakJWTAuthContextInfoProvider;
 import org.wildfly.swarm.microprofile.jwtauth.keycloak.deployment.principal.KeycloakJWTCallerPrincipal;
 import org.wildfly.swarm.microprofile.jwtauth.keycloak.deployment.principal.KeycloakJWTCallerPrincipalFactory;
 
@@ -54,6 +55,7 @@ public class KeycloakMicroprofileJwtTest {
         deployment.addResource(JWTCallerPrincipalFactory.class);
         deployment.addResource(KeycloakJWTCallerPrincipalFactory.class);
         deployment.addResource(KeycloakJWTCallerPrincipal.class);
+        deployment.addResource(KeycloakJWTAuthContextInfoProvider.class);
         deployment.addAsResource("keycloak.json");
         deployment.addAsResource("project-defaults.yml");
         deployment.addAsServiceProvider(JWTCallerPrincipalFactory.class, KeycloakJWTCallerPrincipalFactory.class);

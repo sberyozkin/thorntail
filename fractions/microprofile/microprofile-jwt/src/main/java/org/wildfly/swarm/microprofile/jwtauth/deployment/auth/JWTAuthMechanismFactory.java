@@ -17,6 +17,7 @@
 package org.wildfly.swarm.microprofile.jwtauth.deployment.auth;
 
 import io.smallrye.jwt.KeyUtils;
+import io.smallrye.jwt.auth.principal.DefaultJWTAuthContextInfo;
 import io.smallrye.jwt.auth.principal.JWTAuthContextInfo;
 import io.undertow.security.api.AuthenticationMechanism;
 import io.undertow.security.api.AuthenticationMechanismFactory;
@@ -90,7 +91,7 @@ public class JWTAuthMechanismFactory implements AuthenticationMechanismFactory {
                 }
                 issuedBy = issuedBy.trim();
             }
-            contextInfo.setIssuedBy(issuedBy);
+            contextInfo.setProperty(DefaultJWTAuthContextInfo.MP_JWT_VERIY_PUBLIC_ISSUER, issuedBy);
 
             String publicKeyPemEnc = properties.get("signerPubKey");
             if (publicKeyPemEnc == null) {
@@ -109,7 +110,8 @@ public class JWTAuthMechanismFactory implements AuthenticationMechanismFactory {
                 }
             }
             if (expGracePeriod != null) {
-                contextInfo.setExpGracePeriodSecs(Integer.parseInt(expGracePeriod.trim()));
+                contextInfo.setProperty(DefaultJWTAuthContextInfo.EXPIRY_GRACE_PERIOD,
+                    Integer.parseInt(expGracePeriod.trim()));
             }
 
             if (publicKeyPemEnc == null) { // signerPubKey and MP-JWT-Signer was empty, now trying for JWKS URI.
@@ -123,7 +125,7 @@ public class JWTAuthMechanismFactory implements AuthenticationMechanismFactory {
                 if (jwksUri == null) {
                     throw new IllegalStateException("Neither a static key nor a JWKS URI was set.");
                 }
-                contextInfo.setJwksUri(jwksUri.trim());
+                contextInfo.setProperty(DefaultJWTAuthContextInfo.JWK_KEYS_URI, jwksUri.trim());
 
                 String jwksRefreshInterval = properties.get("jwksRefreshInterval");
                 if (jwksRefreshInterval == null) {
@@ -135,13 +137,14 @@ public class JWTAuthMechanismFactory implements AuthenticationMechanismFactory {
                 if (jwksRefreshInterval == null) {
                     throw new IllegalStateException("JWKS Refresh Interval should be set when JWKS URI is used.");
                 }
-                contextInfo.setJwksRefreshInterval(Integer.valueOf(jwksRefreshInterval.trim()));
+                contextInfo.setProperty(DefaultJWTAuthContextInfo.JWK_KEYS_REFRESH_INTERVAL,
+                    jwksRefreshInterval.trim());
             } else { // PEM key was provided, now parse and set it.
                 // Workaround the double decode issue; https://issues.jboss.org/browse/WFLY-9135
                 String publicKeyPem = publicKeyPemEnc.replace(' ', '+');
                 try {
                     RSAPublicKey pk = (RSAPublicKey) KeyUtils.decodePublicKey(publicKeyPem);
-                    contextInfo.setSignerKey(pk);
+                    contextInfo.setProperty(RSAPublicKey.class.getName(), pk);
                 } catch (Exception e) {
                     throw new IllegalStateException(e);
                 }
