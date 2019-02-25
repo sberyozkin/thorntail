@@ -8,10 +8,6 @@ keycloak:
     action: import
     file: ${project.build.testOutputDirectory}/wildfly-swarm-keycloak-example-realm.json
 swarm:
-  microprofile:
-    jwtauth:
-      token:
-        issuedBy: "http://localhost:8080/auth/realms/wildfly-swarm-keycloak-example"
   security:
     security-domains:
       testSuiteRealm:
