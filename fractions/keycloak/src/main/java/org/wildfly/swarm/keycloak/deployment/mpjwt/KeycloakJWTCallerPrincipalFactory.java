@@ -1,4 +1,4 @@
-package org.wildfly.swarm.microprofile.jwtauth.keycloak.deployment.principal;
+package org.wildfly.swarm.keycloak.deployment.mpjwt;
 
 import java.io.InputStream;
 
