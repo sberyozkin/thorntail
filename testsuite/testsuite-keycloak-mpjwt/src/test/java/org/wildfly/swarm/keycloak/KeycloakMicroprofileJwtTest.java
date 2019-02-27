@@ -29,12 +29,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.wildfly.swarm.jaxrs.JAXRSArchive;
-import org.wildfly.swarm.keycloak.deployment.mpjwt.KeycloakJWTCallerPrincipal;
-import org.wildfly.swarm.keycloak.deployment.mpjwt.KeycloakJWTCallerPrincipalFactory;
 import org.wildfly.swarm.microprofile.jwtauth.keycloak.SecuredApplication;
 import org.wildfly.swarm.microprofile.jwtauth.keycloak.SecuredResource;
-
-import io.smallrye.jwt.auth.principal.JWTCallerPrincipalFactory;
 
 @RunWith(Arquillian.class)
 public class KeycloakMicroprofileJwtTest {
