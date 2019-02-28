@@ -15,8 +15,11 @@
  */
 package org.wildfly.swarm.keycloak;
 
+import static org.wildfly.swarm.spi.api.annotations.DeploymentModule.MetaInfDisposition.IMPORT;
+
 import org.wildfly.swarm.config.Keycloak;
 import org.wildfly.swarm.spi.api.Fraction;
+import org.wildfly.swarm.spi.api.Module;
 import org.wildfly.swarm.spi.api.annotations.DeploymentModule;
 import org.wildfly.swarm.spi.api.annotations.MarshalDMR;
 import org.wildfly.swarm.spi.api.annotations.WildFlyExtension;
@@ -29,6 +32,7 @@ import org.wildfly.swarm.spi.api.annotations.WildFlySubsystem;
 @WildFlySubsystem("keycloak")
 @DeploymentModule(name = "org.keycloak.keycloak-core")
 @DeploymentModule(name = "org.wildfly.swarm.keycloak", slot = "deployment", export = true, metaInf = DeploymentModule.MetaInfDisposition.IMPORT)
+@DeploymentModule(name = "io.smallrye.jwt.keycloak", metaInf = IMPORT, export = true, services = Module.ServiceHandling.IMPORT)
 @MarshalDMR
 public class KeycloakFraction extends Keycloak<KeycloakFraction> implements Fraction {
 
