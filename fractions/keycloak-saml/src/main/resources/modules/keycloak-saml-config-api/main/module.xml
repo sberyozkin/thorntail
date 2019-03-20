@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<module xmlns="urn:jboss:module:1.5" name="keycloak-saml-config-api">
+  <resources>
+    <artifact name="io.thorntail:keycloak-client-saml-config-api:${version.keycloak}"/>
+  </resources>
+</module>
