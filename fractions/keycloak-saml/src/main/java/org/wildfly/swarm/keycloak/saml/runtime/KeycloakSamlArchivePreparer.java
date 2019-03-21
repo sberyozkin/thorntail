@@ -36,7 +36,7 @@ public class KeycloakSamlArchivePreparer implements DeploymentProcessor {
     private static final Logger LOG = Logger.getLogger(KeycloakSamlArchivePreparer.class);
 
     private final Archive<?> archive;
-    
+
     @Inject
     public KeycloakSamlArchivePreparer(Archive archive) {
         this.archive = archive;
