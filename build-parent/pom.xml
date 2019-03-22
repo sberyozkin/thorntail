@@ -417,6 +417,13 @@
 
       <!-- Keycloak SAML client support -->
       <dependency>
+        <groupId>org.keycloak</groupId>
+        <artifactId>keycloak-saml-adapter-feature-pack</artifactId>
+        <type>zip</type>
+        <version>${version.keycloak}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
         <groupId>io.thorntail</groupId>
         <artifactId>keycloak-client-saml-config-api</artifactId>
         <version>${version.keycloak.config-api}</version>
