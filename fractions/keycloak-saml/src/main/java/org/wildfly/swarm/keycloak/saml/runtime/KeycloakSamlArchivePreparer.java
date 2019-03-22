@@ -15,17 +15,14 @@
  */
 package org.wildfly.swarm.keycloak.saml.runtime;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.Node;
-import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
 import org.wildfly.swarm.spi.api.DeploymentProcessor;
 import org.wildfly.swarm.spi.runtime.annotations.DeploymentScoped;
@@ -44,32 +41,37 @@ public class KeycloakSamlArchivePreparer implements DeploymentProcessor {
 
     @Override
     public void process() throws IOException {
-        InputStream keycloakXmlStream = getKeycloakXmlFromClasspath("keycloak-saml.xml");
+        addResourceToArchive("keycloak-saml.xml");
+        addResourceToArchive("keystore.jks");
+    }
+
+    private void addResourceToArchive(String resourceName) {
+        InputStream keycloakXmlStream = getResourceFromClasspath(resourceName);
         if (keycloakXmlStream != null) {
-            archive.add(createKeycloakXmlAsset(keycloakXmlStream), "WEB-INF/keycloak-saml.xml");
+            archive.add(new ByteArrayAsset(keycloakXmlStream), "WEB-INF/" + resourceName);
         }
     }
 
-    private InputStream getKeycloakXmlFromClasspath(String resourceName) {
+    private InputStream getResourceFromClasspath(String resourceName) {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
-        InputStream keycloakXmlStream = cl.getResourceAsStream(resourceName);
-        if (keycloakXmlStream == null) {
+        InputStream is = cl.getResourceAsStream(resourceName);
+        if (is == null) {
 
-            Node xmlNode = archive.get(resourceName);
-            if (xmlNode == null) {
-                xmlNode = getKeycloakXmlNodeFromWebInf(resourceName, true);
+            Node node = archive.get(resourceName);
+            if (node == null) {
+                node = getNodeFromWebInf(resourceName, true);
             }
-            if (xmlNode == null) {
-                xmlNode = getKeycloakXmlNodeFromWebInf(resourceName, false);
+            if (node == null) {
+                node = getNodeFromWebInf(resourceName, false);
             }
-            if (xmlNode != null && xmlNode.getAsset() != null) {
-                keycloakXmlStream = xmlNode.getAsset().openStream();
+            if (node != null && node.getAsset() != null) {
+                is = node.getAsset().openStream();
             }
         }
-        return keycloakXmlStream;
+        return is;
     }
 
-    private Node getKeycloakXmlNodeFromWebInf(String resourceName,
+    private Node getNodeFromWebInf(String resourceName,
             boolean useForwardSlash) {
         String webInfPath = useForwardSlash ? "/WEB-INF" : "WEB-INF";
         if (!resourceName.startsWith("/")) {
@@ -80,18 +82,5 @@ public class KeycloakSamlArchivePreparer implements DeploymentProcessor {
             xmlNode = archive.get(webInfPath + "/classes" + resourceName);
         }
         return xmlNode;
-    }
-
-    private Asset createKeycloakXmlAsset(InputStream in) throws IOException {
-        StringBuilder str = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
-
-            String line = null;
-
-            while ((line = reader.readLine()) != null) {
-                str.append(line).append("\n");
-            }
-        }
-        return new ByteArrayAsset(str.toString().getBytes());
     }
 }
