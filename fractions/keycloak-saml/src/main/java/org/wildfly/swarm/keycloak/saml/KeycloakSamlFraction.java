@@ -25,7 +25,6 @@ import org.wildfly.swarm.spi.api.annotations.WildFlySubsystem;
 @WildFlyExtension(module = "org.keycloak.keycloak-saml-adapter-subsystem")
 @WildFlySubsystem("keycloak-saml")
 @DeploymentModule(name = "org.keycloak.keycloak-saml-core")
-@DeploymentModule(name = "org.wildfly.swarm.keycloak.saml", slot = "deployment", export = true, metaInf = DeploymentModule.MetaInfDisposition.IMPORT)
 @MarshalDMR
 public class KeycloakSamlFraction extends KeycloakSaml<KeycloakSamlFraction> implements Fraction {
 
