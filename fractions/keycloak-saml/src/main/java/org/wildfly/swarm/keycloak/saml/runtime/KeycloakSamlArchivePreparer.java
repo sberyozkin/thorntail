@@ -44,9 +44,9 @@ public class KeycloakSamlArchivePreparer implements DeploymentProcessor {
 
     @Override
     public void process() throws IOException {
-        InputStream keycloakXmlStream = getKeycloakXmlFromClasspath("keycloak.xml");
+        InputStream keycloakXmlStream = getKeycloakXmlFromClasspath("keycloak-saml.xml");
         if (keycloakXmlStream != null) {
-            archive.add(createKeycloakXmlAsset(keycloakXmlStream), "WEB-INF/keycloak.xml");
+            archive.add(createKeycloakXmlAsset(keycloakXmlStream), "WEB-INF/keycloak-saml.xml");
         }
     }
 
