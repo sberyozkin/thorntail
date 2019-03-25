@@ -46,9 +46,9 @@ public class KeycloakSamlArchivePreparer implements DeploymentProcessor {
     }
 
     private void addResourceToArchive(String resourceName) {
-        InputStream keycloakXmlStream = getResourceFromClasspath(resourceName);
-        if (keycloakXmlStream != null) {
-            archive.add(new ByteArrayAsset(keycloakXmlStream), "WEB-INF/" + resourceName);
+        InputStream resourceStream = getResourceFromClasspath(resourceName);
+        if (resourceStream != null) {
+            archive.add(new ByteArrayAsset(resourceStream), "WEB-INF/" + resourceName);
         }
     }
 
