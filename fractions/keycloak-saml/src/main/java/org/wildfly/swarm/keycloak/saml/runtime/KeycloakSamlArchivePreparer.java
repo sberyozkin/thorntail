@@ -15,6 +15,8 @@
  */
 package org.wildfly.swarm.keycloak.saml.runtime;
 
+import static org.wildfly.swarm.spi.api.Defaultable.string;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -24,7 +26,10 @@ import org.jboss.logging.Logger;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.Node;
 import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
+import org.wildfly.swarm.config.runtime.AttributeDocumentation;
+import org.wildfly.swarm.spi.api.Defaultable;
 import org.wildfly.swarm.spi.api.DeploymentProcessor;
+import org.wildfly.swarm.spi.api.annotations.Configurable;
 import org.wildfly.swarm.spi.runtime.annotations.DeploymentScoped;
 
 @DeploymentScoped
@@ -41,8 +46,8 @@ public class KeycloakSamlArchivePreparer implements DeploymentProcessor {
 
     @Override
     public void process() throws IOException {
-        addResourceToArchive("keycloak-saml.xml");
-        addResourceToArchive("keystore.jks");
+        addResourceToArchive(keycloakSamlXmlPath.get());
+        addResourceToArchive(keycloakSamlKeystorePath.get());
     }
 
     private void addResourceToArchive(String resourceName) {
@@ -83,4 +88,12 @@ public class KeycloakSamlArchivePreparer implements DeploymentProcessor {
         }
         return xmlNode;
     }
+
+    @AttributeDocumentation("Path to Keycloak SAML adapter configuration")
+    @Configurable("thorntail.keycloak.saml.xml.path")
+    private Defaultable<String> keycloakSamlXmlPath = string("keycloak-saml.xml");
+
+    @AttributeDocumentation("Path to Keycloak SAML adapter keystore")
+    @Configurable("thorntail.keycloak.saml.keystore.path")
+    private Defaultable<String> keycloakSamlKeystorePath = string("keystore.jks");
 }
