@@ -1,0 +1,15 @@
+keycloak:
+  migration:
+    provider: singleFile
+    action: import
+    file: ${project.build.testOutputDirectory}/samldemo.json
+thorntail:
+  deployment:
+    test.war:
+      web:
+        login-config:
+          auth-method: KEYCLOAK-SAML
+        security-constraints:
+          - url-pattern: /employee-sig
+            methods: [GET]
+            roles: [manager]
