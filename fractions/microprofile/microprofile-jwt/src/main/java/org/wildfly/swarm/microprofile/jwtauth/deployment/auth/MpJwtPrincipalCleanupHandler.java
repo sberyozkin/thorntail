@@ -15,9 +15,9 @@
  */
 package org.wildfly.swarm.microprofile.jwtauth.deployment.auth;
 
+import io.smallrye.jwt.auth.cdi.MPJWTProducer;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
-import org.wildfly.swarm.microprofile.jwtauth.deployment.auth.cdi.MPJWTProducer;
 
 /**
  * @author Michal Szynkiewicz, michal.l.szynkiewicz@gmail.com
